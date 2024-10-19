@@ -1,0 +1,127 @@
+
+pandas == 2.0.3
+numpy == 1.24.4
+scikit-learn == 1.3.2
+
+sudo apt install python3-pip
+sudo apt install python3.10-venv
+python3 -m venv deployenv
+pip install pandas numpy scikit-learn
+
+docker build -t dep-flask .
+docker run -it --rm --entrypoint=bash python:3.8.12-slim
+apt-get update
+apt install python3-venv
+python3 -m venv deployenv
+source deployenv/bin/activate
+[COPY requirements]
+pip install --system --deploy -r requirements.txt 
+
+
+requirements.txt
+pandas
+
+
+____________
+Pipenv to shell and install requirements
+pipenv shell
+pip install ..
+
+command deploy. pip install -r requirements.txt 
+_________
+
+docker run -it --rm --entrypoint=bash deploy1
+gunicorn --bind=0.0.0.0:9696 predict:app
+_______________
+
+pip install awsebcli
+eb init -p docker -r us-east-1 deploy1
+eb local run --port 9696
+eb create churn-serving-dep
+
+_________
+
+Ingresar a EC2 desde git bash
+
+ssh -i ~/.ssh/snof8.pem ubuntu@54.175.1.241
+
+Host deploy-ml
+        Hostname 54.175.1.241
+        User ubuntu
+        IdentityFile c:/Users/DeLL/.ssh/snof8.pem
+        StrictHostKeyChecking no
+
+_________
+
+Ingresar a EC2 desde Movaxterm.
+https://mobaxterm.mobatek.net/
+
+Session > ssh > 
+
+Remote host. Public IP.
+Username. ubuntu
+Advanced SSH. Private key
+
+
+--------
+Subir los archivos
+mkdir deploy
+cd deploy
+
+//Subir estos archivos a VM EC2
+git clone [repo]
+train.py predict.py predict2.py .csv modelo0.9
+pip3 install virtualenv
+
+sudo apt install git
+
+#Activar virtual environment(opcional)
+source env/bin/activate
+pip install pandas numpy flask scikit-learn gunicorn
+
+#Probar los script
+python train.py
+python predict.py
+
+#Probar la App en flask
+python predict2.py
+
+pip install gunicorn
+
+#Probar la API
+gunicorn --bind 0.0.0.0:9696 predict2:app
+
+54.175.1.241:9696/predict
+{
+    "customerid": "8879-zkjprt",
+    "gender": "male",
+    "seniorcitizen": 0,
+    "partner": "yes",
+    "dependents": "yes",
+    "tenure": 10,
+    "phoneservice": "yes",
+    "multiplelines": "no",
+    "internetservice": "dsl",
+    "onlinesecurity": "yes",
+    "onlinebackup": "yes",
+    "deviceprotection": "no",
+    "techsupport": "no",
+    "streamingtv": "no",
+    "streamingmovies": "yes",
+    "contract": "one_year",
+    "paperlessbilling": "yes",
+    "paymentmethod": "bank_transfer_(automatic)",
+    "monthlycharges": 18,
+    "totalcharges": 1800
+}
+
+#gunicorn stop server
+#Entontrar el PID
+ps aux | grep gunicorn
+
+#Parar el servidor
+kill [PID]
+
+#Deploy
+https://devcenter.heroku.com/articles/python-gunicorn
+
